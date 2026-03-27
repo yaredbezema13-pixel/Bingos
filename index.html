@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Bingo Game</title>
+
+<style>
+body {
+  text-align: center;
+  font-family: Arial;
+  background: #0b1f3a;
+  color: white;
+}
+
+h1 {
+  margin-top: 20px;
+}
+
+#letter {
+  font-size: 60px;
+  margin-top: 20px;
+}
+
+#number {
+  font-size: 80px;
+  margin: 30px;
+}
+
+button {
+  padding: 15px 30px;
+  font-size: 20px;
+  border: none;
+  border-radius: 10px;
+  background: orange;
+  color: black;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🎉 BINGO GAME</h1>
+
+<div id="letter">B</div>
+<div id="number">0</div>
+
+<button onclick="drawNumber()">START</button>
+
+<script>
+let numbers = [];
+
+function drawNumber() {
+
+  if (numbers.length === 75) {
+    alert("Game Over!");
+    return;
+  }
+
+  let num;
+
+  do {
+    num = Math.floor(Math.random() * 75) + 1;
+  } while (numbers.includes(num));
+
+  numbers.push(num);
+
+  let letter = "";
+
+  if (num <= 15) letter = "B";
+  else if (num <= 30) letter = "I";
+  else if (num <= 45) letter = "N";
+  else if (num <= 60) letter = "G";
+  else letter = "O";
+
+  document.getElementById("letter").innerText = letter;
+  document.getElementById("number").innerText = num;
+}
+</script>
+
+</body>
+</html>
