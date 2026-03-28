@@ -1,27 +1,41 @@
-let numbers = [];
+const socket = io();
 
-function drawNumber() {
+let grid = document.getElementById("grid");
+let walletEl = document.getElementById("wallet");
+let statusEl = document.getElementById("status");
 
-  if(numbers.length === 75){
-    alert("Game Over!");
-    return;
-  }
+let wallet = 0;
 
-  let num;
-  do {
-    num = Math.floor(Math.random() * 75) + 1;
-  } while(numbers.includes(num));
+// create grid 1–100 ONLY
+for(let i=1;i<=100;i++){
+  let cell = document.createElement("div");
+  cell.className = "cell";
+  cell.innerText = i;
 
-  numbers.push(num);
+  cell.onclick = () => {
+    socket.emit("pick", i);
+  };
 
-  let letter = "";
-
-  if(num <= 15) letter = "B";
-  else if(num <= 30) letter = "I";
-  else if(num <= 45) letter = "N";
-  else if(num <= 60) letter = "G";
-  else letter = "O";
-
-  document.getElementById("letter").innerText = letter;
-  document.getElementById("number").innerText = num;
+  grid.appendChild(cell);
 }
+
+socket.on("wallet", (money)=>{
+  wallet = money;
+  walletEl.innerText = money.toFixed(2);
+});
+
+socket.on("result", (data)=>{
+  wallet = data.wallet;
+  walletEl.innerText = wallet.toFixed(2);
+
+  statusEl.innerText = data.win ? "🎉 YOU WIN!" : "❌ YOU LOSE!";
+});
+
+function bet(){
+  socket.emit("bet", 10);
+}
+
+function reset(){
+  socket.emit("reset");
+}
+

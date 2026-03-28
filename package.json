@@ -1,12 +1,23 @@
 {
-  "name": "bingo-server",
+  "name": "casino-multiplayer-pro",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "Real-time multiplayer casino game (Socket.io + Express)",
+  "main": "server.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node server.js"
   },
+  "keywords": [
+    "casino",
+    "multiplayer",
+    "socket.io",
+    "game",
+    "nodejs"
+  ],
+  "author": "casino-dev",
+  "license": "MIT",
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "socket.io": "^4.7.2"
   }
 }
 
