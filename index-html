@@ -1,0 +1,128 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ቡሌሆራ ቢንጎ</title>
+
+<style>
+body{
+  font-family:Arial;
+  text-align:center;
+  background:#020617;
+  color:white;
+}
+
+h1{
+  color:#22c55e;
+  margin-top:20px;
+}
+
+#result{
+  font-size:70px;
+  margin:30px;
+  color:#facc15;
+}
+
+button{
+  padding:15px 30px;
+  font-size:18px;
+  border:none;
+  border-radius:10px;
+  background:#22c55e;
+  cursor:pointer;
+}
+
+button:hover{
+  background:#16a34a;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns: repeat(5, 60px);
+  gap:10px;
+  justify-content:center;
+  margin-top:30px;
+}
+
+.cell{
+  padding:10px;
+  border-radius:8px;
+  background:#1e293b;
+}
+
+.called{
+  background:#22c55e;
+  color:black;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🎲 ቡሌሆራ ቢንጎ</h1>
+
+<div id="result">--</div>
+
+<button onclick="callNumber()">CALL NUMBER</button>
+
+<div class="grid" id="board"></div>
+
+<script>
+// create bingo numbers
+let ranges = {
+  B: createRange(1,15),
+  I: createRange(16,30),
+  N: createRange(31,45),
+  G: createRange(46,60),
+  O: createRange(61,75)
+};
+
+let calledNumbers = [];
+
+// create range function
+function createRange(start,end){
+  let arr=[];
+  for(let i=start;i<=end;i++) arr.push(i);
+  return arr;
+}
+
+// create board UI
+let board = document.getElementById("board");
+for(let i=1;i<=75;i++){
+  let div = document.createElement("div");
+  div.className="cell";
+  div.id="n"+i;
+  div.innerText=i;
+  board.appendChild(div);
+}
+
+// call number
+function callNumber(){
+  let letters = ["B","I","N","G","O"];
+
+  let availableLetters = letters.filter(l => ranges[l].length > 0);
+
+  if(availableLetters.length === 0){
+    alert("Game Finished!");
+    return;
+  }
+
+  let letter = availableLetters[Math.floor(Math.random()*availableLetters.length)];
+  let arr = ranges[letter];
+
+  let index = Math.floor(Math.random()*arr.length);
+  let number = arr[index];
+
+  arr.splice(index,1);
+  calledNumbers.push(letter+number);
+
+  document.getElementById("result").innerText = letter + " " + number;
+
+  let cell = document.getElementById("n"+number);
+  cell.classList.add("called");
+}
+</script>
+
+</body>
+</html>
